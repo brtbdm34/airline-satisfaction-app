@@ -43,7 +43,8 @@ st.set_page_config(
     layout='wide',
 )
 
-st.title('✈️ Küresel Havayolu Proaktif Risk ve Sadakat Yönetimi')
+# Üst Başlık (Görseldeki gibi temiz ve kurumsal)
+st.title('✈️ KÜRESEL HAVAYOLU PROAKTİF RİSK VE SADAKAT YÖNETİMİ')
 st.markdown(
     '**Geliştirici:** Berat Badem | **Sistem:** Kurumsal Karar Destek ve'
     ' Proaktif CRM Motoru'
@@ -86,11 +87,6 @@ else:
 
 X_sample = sample.drop(columns=['satisfaction'])
 
-st.info(
-    f'📌 **Veri Setindeki Gerçek Durum:** Yolcu bu uçuş sonucunda'
-    f' **{gercek_durum}**.'
-)
-
 st.markdown('---')
 
 # 1. MOD: Tüm Modelleri Karşılaştır ve SHAP Göster
@@ -129,7 +125,7 @@ if view_mode == '🏆 Tüm Modelleri Karşılaştır':
     else:
       st.warning('⚠️ SHAP grafiği için önce `main.py` dosyasını çalıştırın.')
 
-# 2. MOD: Tekil İnceleme + Sekmeli Yapı + Finansal Etki + Kriz Yönetimi + Rapor İndirme
+# 2. MOD: Tekil İnceleme + Görsel İstediğin Gibi Tasarlanan Sekmeli Yapı
 else:
   st.subheader('🔍 Tekil Model Derinlemesine İnceleme & Proaktif Aksiyon Motoru')
 
@@ -181,145 +177,74 @@ else:
 
     # --- SEKMELİ YAPI (st.tabs) ---
     tab1, tab2, tab3, tab4 = st.tabs([
-        '📋 Yolcu Profili ve Tahmin',
-        '🚨 Kriz & CRM Aksiyonu',
-        '💰 Finansal Etki & ROI',
-        '📄 Yönetici Raporu',
+        '📋 Yolcu Profili',
+        '🚨 Kriz & Aksiyon',
+        '💰 Finansal ROI',
+        '📄 Rapor İndir',
     ])
 
-    # --- TAB 1: Yolcu Profili ve Tahmin ---
+    # --- TAB 1: Yolcu Profili (Görsel Tasarıma Birebir Uyumlu) ---
     with tab1:
-      st.markdown('### Yolcunun Temel Uçuş Parametreleri')
-
       st.markdown(
-          f"""
-            <div style="display: flex; justify-content: space-between; background-color: #f8f9fa; padding: 20px; border-radius: 8px; border: 1px solid #e9ecef; margin-bottom: 20px;">
-                <div style="text-align: center;">
-                    <span style="font-size: 12px; color: #6c757d; text-transform: uppercase;">Yolcu Yaşı</span><br>
-                    <b style="font-size: 24px; color: #0056b3;">{int(X_sample['Age'].values[0])}</b>
-                </div>
-                <div style="text-align: center; border-left: 1px solid #e9ecef; border-right: 1px solid #e9ecef; padding: 0 20px;">
-                    <span style="font-size: 12px; color: #6c757d; text-transform: uppercase;">Uçuş Mesafesi</span><br>
-                    <b style="font-size: 24px; color: #0056b3;">{int(X_sample['Flight Distance'].values[0])} km</b>
-                </div>
-                <div style="text-align: center;">
-                    <span style="font-size: 12px; color: #6c757d; text-transform: uppercase;">Varış Gecikmesi</span><br>
-                    <b style="font-size: 24px; color: #0056b3;">{int(X_sample['Arrival Delay in Minutes'].values[0])} dk</b>
-                </div>
-            </div>
-            """,
-          unsafe_allow_html=True,
+          '### Yolcu Örneği Analizi & Özellikleri'
       )
 
-      col_p1, col_p2, col_p3 = st.columns(3)
-      with col_p1:
-        st.metric(
-            'Wi-Fi Puanı', int(X_sample['Inflight wifi service'].values[0])
-        )
-      with col_p2:
-        st.metric('Online Biniş', int(X_sample['Online boarding'].values[0]))
-      with col_p3:
-        st.metric('Koltuk Konforu', int(X_sample['Seat comfort'].values[0]))
+      c1, c2, c3 = st.columns([2, 1.2, 1])
 
-      st.markdown('---')
-      if pred == 1:
-        st.success(
-            f'✅ **{selected_model_name}** bu yolcuyu **%{guven:.2f}** ihtimalle'
-            ' **Memnun** olarak değerlendirdi.'
-        )
-      else:
-        st.error(
-            f'⚠️ **{selected_model_name}** bu yolcuyu **%{guven:.2f}** ihtimalle'
-            ' **Memnun Değil** olarak değerlendirdi.'
-        )
+      # Sol Kolon: Parametre Kartları Grid Yapısı
+      with c1:
+        st.markdown('**Seçilen Yolcunun Profil Özellikleri**')
+        sub_c1, sub_c2 = st.columns(2)
+        with sub_c1:
+          st.markdown(
+              f"""
+                    <div style="background-color: #f8f9fa; padding: 10px; border-radius: 6px; border: 1px solid #e9ecef; margin-bottom: 10px;">
+                        <span style="font-size: 11px; color: #6c757d;">🧳 Uçuş Mesafesi</span><br>
+                        <b style="font-size: 15px; color: #0056b3;">{int(X_sample['Flight Distance'].values[0])} km</b>
+                    </div>
+                    <div style="background-color: #f8f9fa; padding: 10px; border-radius: 6px; border: 1px solid #e9ecef; margin-bottom: 10px;">
+                        <span style="font-size: 11px; color: #6c757d;">⏱️ Varış Gecikmesi</span><br>
+                        <b style="font-size: 15px; color: #dc3545;">{int(X_sample['Arrival Delay in Minutes'].values[0])} dk</b>
+                    </div>
+                    <div style="background-color: #f8f9fa; padding: 10px; border-radius: 6px; border: 1px solid #e9ecef;">
+                        <span style="font-size: 11px; color: #6c757d;">💻 Online Biniş</span><br>
+                        <b style="font-size: 15px; color: #0056b3;">Puan: {int(X_sample['Online boarding'].values[0])}/5</b>
+                    </div>
+                    """,
+              unsafe_allow_html=True,
+          )
+        with sub_c2:
+          st.markdown(
+              f"""
+                    <div style="background-color: #f8f9fa; padding: 10px; border-radius: 6px; border: 1px solid #e9ecef; margin-bottom: 10px;">
+                        <span style="font-size: 11px; color: #6c757d;">👤 Yolcu Yaşı</span><br>
+                        <b style="font-size: 15px; color: #0056b3;">{int(X_sample['Age'].values[0])}</b>
+                    </div>
+                    <div style="background-color: #f8f9fa; padding: 10px; border-radius: 6px; border: 1px solid #e9ecef; margin-bottom: 10px;">
+                        <span style="font-size: 11px; color: #6c757d;">💺 Koltuk Konforu</span><br>
+                        <b style="font-size: 15px; color: #0056b3;">Puan: {int(X_sample['Seat comfort'].values[0])}/5</b>
+                    </div>
+                    <div style="background-color: #f8f9fa; padding: 10px; border-radius: 6px; border: 1px solid #e9ecef;">
+                        <span style="font-size: 11px; color: #6c757d;">📶 Wi-Fi Hizmeti</span><br>
+                        <b style="font-size: 15px; color: #0056b3;">Puan: {int(X_sample['Inflight wifi service'].values[0])}/5</b>
+                    </div>
+                    """,
+              unsafe_allow_html=True,
+          )
 
-    # --- TAB 2: Kriz Yönetimi ve CRM Aksiyonu ---
-    with tab2:
-      if pred == 1:
-        st.info(
-            '💡 Yolcu sadık müşteri segmentinde. Herhangi bir operasyonel'
-            ' müdahaleye gerek yok.'
-        )
-      else:
-        st.markdown(
-            """
-                <div style="padding: 15px; border-radius: 8px; background-color: #ffe6e6; border-left: 6px solid #ff4d4d; margin-bottom: 20px;">
-                    <h4 style="color: #cc0000; margin: 0; font-size: 16px;">🔴 SEVİYE-1 KRİTİK CHURN RİSKİ TESPİT EDİLDİ</h4>
-                    <p style="margin: 5px 0 0 0; color: #333; font-size: 14px;">Yolcunun memnuniyetsizlik olasılığı kritik eşiğin üzerindedir. Uçuş sonu kayıp riski yüksek segmenttedir.</p>
-                </div>
-                """,
-            unsafe_allow_html=True,
-        )
-
-        st.markdown(f'* **Simüle Edilen Sadakat Kartı:** `{simulated_tier}`')
-        st.markdown('### 💡 CRM & Finansal Karar Tavsiyesi:')
-        st.markdown(f'> 🎯 **Aksiyon Özeti:** {action_text}')
-
-    # --- TAB 3: Finansal Etki ve ROI Analizi ---
-    with tab3:
-      if pred == 0:
-        st.markdown('### Şirket Bütçesine Etki (ROI) Analizi')
-        st.markdown(
-            f"""
-            <div style="display: flex; justify-content: space-between; background-color: #fff3cd; padding: 15px; border-radius: 6px; border: 1px solid #ffeeba; margin-bottom: 15px;">
-                <div>
-                    <span style="font-size: 12px; color: #856404;">POTANSİYEL YILLIK KAYIP</span><br>
-                    <b style="font-size: 18px; color: #212529;">{churn_cost} TL</b>
-                </div>
-                <div style="border-left: 1px solid #ffeeba; padding-left: 15px;">
-                    <span style="font-size: 12px; color: #856404;">MÜDAHALE MALİYETİ</span><br>
-                    <b style="font-size: 18px; color: #212529;">{mitigation_cost} TL</b>
-                </div>
-                <div style="border-left: 1px solid #ffeeba; padding-left: 15px;">
-                    <span style="font-size: 12px; color: #856404;">TAHMİNİ ROI</span><br>
-                    <b style="font-size: 18px; color: #198754;">YÜKSEK (%{ (1 - (mitigation_cost/churn_cost)) * 100 :.1f} )</b>
-                </div>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-        st.write(
-            f'Bu analiz, {simulated_tier} segmentindeki yolcuyu kazanmak için'
-            ' önerilen proaktif aksiyonun şirkete olan finansal getirisini'
-            ' simüle eder.'
-        )
-      else:
-        st.info('Yolcu memnun, finansal risk analizi gerekmemektedir.')
-
-    # --- TAB 4: Yönetici Özeti Raporu ---
-    with tab4:
-      if pred == 0:
-        st.subheader('📄 İstasyon Mühendisliği Yönetim Özeti')
-
-        report_content = f"""=== KÜRESEL HAVAYOLU OPERASYONEL RİSK RAPORU ===
-Geliştirici: Berat Badem
-Model: {selected_model_name}
-Tahmin Sonucu: {durum} (Güven: %{guven:.2f})
-Sadakat Segmenti: {simulated_tier}
-Tahmini Kayıp Riski: YÜKSEK (%84.2)
-Finansal Etki Analizi: Potansiyel Kayıp: {churn_cost} TL | Müdahale Maliyeti: {mitigation_cost} TL
-Önerilen Aksiyon: {action_text}
-Tarih / Zaman: Otomatik Sistem Üretimidir.
-"""
-        st.code(report_content, language=None)
-
-        st.download_button(
-            label='📥 Yönetici Raporunu İndir (.txt)',
-            data=report_content,
-            file_name='kriz_yonetimi_raporu.txt',
-            mime='text/plain',
-        )
-      else:
-        st.info('Yolcu memnun, resmi rapor oluşturulmasına gerek yok.')
-
-    st.markdown('---')
-    st.info(
-        '💡 Sunum ipucu: "Hocam sağ üstteki sekmelerden; yolcunun profilini,'
-        ' otomatik kriz yönetimini ve şirkete olan finansal etkisini adım adım'
-        ' gösterebilirim."'
-    )
-  else:
-    st.warning(
-        'Tekli model modundasınız. Lütfen `main.py` çalıştırarak çoklu model'
-        ' yapısını aktif edin.'
-    )
+      # Orta Kolon: Yapay Zekâ Tahmin Sonucu Kutusu
+      with c2:
+        st.markdown('**Yapay Zekâ Tahmin Sonucu**')
+        if pred == 1:
+          st.markdown(
+              f"""
+                    <div style="background-color: #d1e7dd; padding: 18px; border-radius: 8px; border: 1px solid #badbcc; text-align: center; margin-bottom: 10px;">
+                        <h3 style="color: #0f5132; margin: 0; font-size: 20px;">✅ MEMNUN :)</h3>
+                        <p style="color: #0f5132; margin: 5px 0 0 0; font-size: 14px;">Güven: %{guven:.1f}</p>
+                    </div>
+                    <p style="font-size: 11px; color: #6c757d;">✔️ Yolcu yüksek olasılıkla memnun. Mevcut hizmet kalitesi korunmalı.</p>
+                    """,
+              unsafe_allow_html=True,
+          )
+        else:
+          st
