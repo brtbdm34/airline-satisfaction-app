@@ -43,7 +43,7 @@ st.set_page_config(
     layout='wide',
 )
 
-# Üst Başlık (Görseldeki gibi temiz ve kurumsal)
+# Üst Başlık
 st.title('✈️ KÜRESEL HAVAYOLU PROAKTİF RİSK VE SADAKAT YÖNETİMİ')
 st.markdown(
     '**Geliştirici:** Berat Badem | **Sistem:** Kurumsal Karar Destek ve'
@@ -125,7 +125,7 @@ if view_mode == '🏆 Tüm Modelleri Karşılaştır':
     else:
       st.warning('⚠️ SHAP grafiği için önce `main.py` dosyasını çalıştırın.')
 
-# 2. MOD: Tekil İnceleme + Görsel İstediğin Gibi Tasarlanan Sekmeli Yapı
+# 2. MOD: Tekil İnceleme + İstediğin Görsel Tasarım
 else:
   st.subheader('🔍 Tekil Model Derinlemesine İnceleme & Proaktif Aksiyon Motoru')
 
@@ -183,11 +183,9 @@ else:
         '📄 Rapor İndir',
     ])
 
-    # --- TAB 1: Yolcu Profili (Görsel Tasarıma Birebir Uyumlu) ---
+    # --- TAB 1: Yolcu Profili (İstediğin Görsel Düzen) ---
     with tab1:
-      st.markdown(
-          '### Yolcu Örneği Analizi & Özellikleri'
-      )
+      st.markdown('### Yolcu Örneği Analizi & Özellikleri')
 
       c1, c2, c3 = st.columns([2, 1.2, 1])
 
@@ -247,4 +245,116 @@ else:
               unsafe_allow_html=True,
           )
         else:
-          st
+          st.markdown(
+              f"""
+                    <div style="background-color: #f8d7da; padding: 18px; border-radius: 8px; border: 1px solid #f5c6cb; text-align: center; margin-bottom: 10px;">
+                        <h3 style="color: #842029; margin: 0; font-size: 18px;">⚠️ MEMNUN DEĞİL :(</h3>
+                        <p style="color: #842029; margin: 5px 0 0 0; font-size: 14px;">Güven: %{guven:.1f}</p>
+                    </div>
+                    <p style="font-size: 11px; color: #6c757d;">⚠️ Yolcu churn riski taşıyor. Acil CRM müdahalesi önerilir.</p>
+                    """,
+              unsafe_allow_html=True,
+          )
+
+      # Sağ Kolon: Gerçek Veri Durumu
+      with c3:
+        st.markdown('**Gerçek Veri Durumu**')
+        st.markdown(
+            f"""
+                <div style="background-color: #e2e3e5; padding: 18px; border-radius: 8px; border: 1px solid #d3d6d8;">
+                    <p style="font-size: 12px; color: #383d41; margin: 0;">📌 <b>Veri Seti Gerçeği:</b><br>Yolcu bu uçuş sonucunda <b>{gercek_durum}</b> olarak etiketlenmiştir.</p>
+                </div>
+                """,
+            unsafe_allow_html=True,
+        )
+
+    # --- TAB 2: Kriz Yönetimi ve CRM Aksiyonu ---
+    with tab2:
+      if pred == 1:
+        st.info(
+            '💡 Yolcu sadık müşteri segmentinde. Herhangi bir operasyonel'
+            ' müdahaleye gerek yok.'
+        )
+      else:
+        st.markdown(
+            """
+                <div style="padding: 15px; border-radius: 8px; background-color: #ffe6e6; border-left: 6px solid #ff4d4d; margin-bottom: 20px;">
+                    <h4 style="color: #cc0000; margin: 0; font-size: 16px;">🔴 SEVİYE-1 KRİTİK CHURN RİSKİ TESPİT EDİLDİ</h4>
+                    <p style="margin: 5px 0 0 0; color: #333; font-size: 14px;">Yolcunun memnuniyetsizlik olasılığı kritik eşiğin üzerindedir. Uçuş sonu kayıp riski yüksek segmenttedir.</p>
+                </div>
+                """,
+            unsafe_allow_html=True,
+        )
+
+        st.markdown(f'* **Simüle Edilen Sadakat Kartı:** `{simulated_tier}`')
+        st.markdown('### 💡 CRM & Finansal Karar Tavsiyesi:')
+        st.markdown(f'> 🎯 **Aksiyon Özeti:** {action_text}')
+
+    # --- TAB 3: Finansal Etki ve ROI Analizi ---
+    with tab3:
+      if pred == 0:
+        st.markdown('### Şirket Bütçesine Etki (ROI) Analizi')
+        st.markdown(
+            f"""
+            <div style="display: flex; justify-content: space-between; background-color: #fff3cd; padding: 15px; border-radius: 6px; border: 1px solid #ffeeba; margin-bottom: 15px;">
+                <div>
+                    <span style="font-size: 12px; color: #856404;">POTANSİYEL YILLIK KAYIP</span><br>
+                    <b style="font-size: 18px; color: #212529;">{churn_cost} TL</b>
+                </div>
+                <div style="border-left: 1px solid #ffeeba; padding-left: 15px;">
+                    <span style="font-size: 12px; color: #856404;">MÜDAHALE MALİYETİ</span><br>
+                    <b style="font-size: 18px; color: #212529;">{mitigation_cost} TL</b>
+                </div>
+                <div style="border-left: 1px solid #ffeeba; padding-left: 15px;">
+                    <span style="font-size: 12px; color: #856404;">TAHMİNİ ROI</span><br>
+                    <b style="font-size: 18px; color: #198754;">YÜKSEK (%{ (1 - (mitigation_cost/churn_cost)) * 100 :.1f} )</b>
+                </div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+        st.write(
+            f'Bu analiz, {simulated_tier} segmentindeki yolcuyu kazanmak için'
+            ' önerilen proaktif aksiyonun şirkete olan finansal getirisini'
+            ' simüle eder.'
+        )
+      else:
+        st.info('Yolcu memnun, finansal risk analizi gerekmemektedir.')
+
+    # --- TAB 4: Yönetici Özeti Raporu ---
+    with tab4:
+      if pred == 0:
+        st.subheader('📄 İstasyon Mühendisliği Yönetim Özeti')
+
+        report_content = f"""=== KÜRESEL HAVAYOLU OPERASYONEL RİSK RAPORU ===
+Geliştirici: Berat Badem
+Model: {selected_model_name}
+Tahmin Sonucu: {durum} (Güven: %{guven:.2f})
+Sadakat Segmenti: {simulated_tier}
+Tahmini Kayıp Riski: YÜKSEK (%84.2)
+Finansal Etki Analizi: Potansiyel Kayıp: {churn_cost} TL | Müdahale Maliyeti: {mitigation_cost} TL
+Önerilen Aksiyon: {action_text}
+Tarih / Zaman: Otomatik Sistem Üretimidir.
+"""
+        st.code(report_content, language=None)
+
+        st.download_button(
+            label='📥 Yönetici Raporunu İndir (.txt)',
+            data=report_content,
+            file_name='kriz_yonetimi_raporu.txt',
+            mime='text/plain',
+        )
+      else:
+        st.info('Yolcu memnun, resmi rapor oluşturulmasına gerek yok.')
+
+    st.markdown('---')
+    st.info(
+        '💡 Sunum ipucu: "Hocam üstteki sekmelerden; yolcunun profilini,'
+        ' otomatik kriz yönetimini ve şirkete olan finansal etkisini adım adım'
+        ' gösterebilirim."'
+    )
+  else:
+    st.warning(
+        'Tekli model modundasınız. Lütfen `main.py` çalıştırarak çoklu model'
+        ' yapısını aktif edin.'
+    )git add app.py
