@@ -1,4 +1,4 @@
-import os
+imimport os
 import random
 import kagglehub
 import joblib
@@ -43,9 +43,11 @@ st.set_page_config(
     layout='wide',
 )
 
-st.title(
-    '✈️ Küresel Havayolu Proaktif Risk, Finansal Etki ve Sadakat Yönetimi Karar'
-    ' Destek Sistemi'
+# Başlık kısmını tek satırda ve net olacak şekilde düzenledik
+st.title('✈️ Küresel Havayolu Proaktif Risk ve Sadakat Yönetimi')
+st.markdown(
+    '**Geliştirici:** Berat Badem | **Sistem:** Kurumsal Karar Destek ve'
+    ' Proaktif CRM Motoru'
 )
 st.write(
     'Bu sistem; yapay zekâ tahminlerini finansal maliyet analizi, proaktif'
@@ -130,10 +132,7 @@ if view_mode == '🏆 Tüm Modelleri Karşılaştır':
 
 # 2. MOD: Tekil İnceleme + Sekmeli Yapı + Finansal Etki + Kriz Yönetimi + Rapor İndirme
 else:
-  st.subheader(
-      '🔍 Tekil Model Derinlemesine İnceleme, Finansal Etki & Proaktif Aksiyon'
-      ' Motoru'
-  )
+  st.subheader('🔍 Tekil Model Derinlemesine İnceleme & Proaktif Aksiyon Motoru')
 
   if all_models:
     selected_model_name = st.selectbox(
@@ -153,7 +152,7 @@ else:
 
     st.markdown(f'### Seçilen Model: `{selected_model_name}`')
 
-    # --- HESAPLAMALAR (Sekmelerde kullanılmak üzere) ---
+    # --- HESAPLAMALAR ---
     tier_list = [
         'Classic (Standart)',
         'Classic Plus',
@@ -294,6 +293,7 @@ else:
         st.subheader('📄 İstasyon Mühendisliği Yönetim Özeti')
 
         report_content = f"""=== KÜRESEL HAVAYOLU OPERASYONEL RİSK RAPORU ===
+Geliştirici: Berat Badem
 Model: {selected_model_name}
 Tahmin Sonucu: {durum} (Güven: %{guven:.2f})
 Sadakat Segmenti: {simulated_tier}
