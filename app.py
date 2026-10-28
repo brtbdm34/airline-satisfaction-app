@@ -357,4 +357,4 @@ Tarih / Zaman: Otomatik Sistem Üretimidir.
     st.warning(
         'Tekli model modundasınız. Lütfen `main.py` çalıştırarak çoklu model'
         ' yapısını aktif edin.'
-    )git add app.py
+    )
