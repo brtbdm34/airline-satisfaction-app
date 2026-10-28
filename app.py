@@ -43,7 +43,7 @@ st.set_page_config(
     layout='wide',
 )
 
-# Üst Başlık (Ekrana sığacak şekilde optimize edildi)
+# Üst Başlık
 st.markdown(
     '<h2 style="color: #0e1117; margin-bottom: 0;">✈️ KÜRESEL HAVAYOLU PROAKTİF'
     ' RİSK VE SADAKAT YÖNETİMİ</h2>',
@@ -85,7 +85,6 @@ X_sample = sample.drop(columns=['satisfaction'])
 st.markdown('---')
 
 if all_models:
-  # Şampiyon modeli varsayılan olarak ana ekranda çalıştırıyoruz
   selected_model_name = champion_name
   selected_data = all_models[selected_model_name]
   sel_model = selected_data['model']
@@ -132,13 +131,12 @@ if all_models:
       '📄 Rapor İndir',
   ])
 
-  # --- TAB 1: Yolcu Profili (İstediğin 3 Sütunlu Tasarım) ---
+  # --- TAB 1: Yolcu Profili ---
   with tab1:
     st.markdown('### Yolcu Örneği Analizi & Özellikleri')
 
     c1, c2, c3 = st.columns([2, 1.2, 1])
 
-    # Sol Kolon: Parametre Kartları Grid Yapısı
     with c1:
       st.markdown('**Seçilen Yolcunun Profil Özellikleri**')
       sub_c1, sub_c2 = st.columns(2)
@@ -179,7 +177,6 @@ if all_models:
             unsafe_allow_html=True,
         )
 
-    # Orta Kolon: Yapay Zekâ Tahmin Sonucu Kutusu
     with c2:
       st.markdown('**Yapay Zekâ Tahmin Sonucu**')
       if pred == 1:
@@ -205,7 +202,6 @@ if all_models:
             unsafe_allow_html=True,
         )
 
-    # Sağ Kolon: Gerçek Veri Durumu
     with c3:
       st.markdown('**Gerçek Veri Durumu**')
       st.markdown(
@@ -217,7 +213,7 @@ if all_models:
           unsafe_allow_html=True,
       )
 
-  # --- TAB 2: Kriz Yönetimi ve CRM Aksiyonu ---
+  # --- TAB 2: Kriz Yönetimi ---
   with tab2:
     if pred == 1:
       st.info(
@@ -234,12 +230,11 @@ if all_models:
             """,
           unsafe_allow_html=True,
       )
-
       st.markdown(f'* **Simüle Edilen Sadakat Kartı:** `{simulated_tier}`')
       st.markdown('### 💡 CRM & Finansal Karar Tavsiyesi:')
       st.markdown(f'> 🎯 **Aksiyon Özeti:** {action_text}')
 
-  # --- TAB 3: Finansal Etki ve ROI Analizi ---
+  # --- TAB 3: Finansal ROI ---
   with tab3:
     if pred == 0:
       st.markdown('### Şirket Bütçesine Etki (ROI) Analizi')
@@ -270,7 +265,7 @@ if all_models:
     else:
       st.info('Yolcu memnun, finansal risk analizi gerekmemektedir.')
 
-  # --- TAB 4: Yönetici Özeti Raporu ---
+  # --- TAB 4: Rapor İndir ---
   with tab4:
     if pred == 0:
       st.subheader('📄 İstasyon Mühendisliği Yönetim Özeti')
@@ -278,7 +273,7 @@ if all_models:
       report_content = f"""=== KÜRESEL HAVAYOLU OPERASYONEL RİSK RAPORU ===
 Geliştirici: Berat Badem
 Model: {selected_model_name}
-Tahmin Sonucu: {durub := durum} (Güven: %{guven:.2f})
+Tahmin Sonucu: {durum} (Güven: %{guven:.2f})
 Sadakat Segmenti: {simulated_tier}
 Tahmini Kayıp Riski: YÜKSEK (%84.2)
 Finansal Etki Analizi: Potansiyel Kayıp: {churn_cost} TL | Müdahale Maliyeti: {mitigation_cost} TL
@@ -301,4 +296,4 @@ Tarih / Zaman: Otomatik Sistem Üretimidir.
       '💡 Sunum ipucu: "Hocam üstteki sekmelerden; yolcunun profilini, otomatik'
       ' kriz yönetimini ve şirkete olan finansal etkisini adım adım'
       ' gösterebilirim."'
-  )
+  )git add app.py
