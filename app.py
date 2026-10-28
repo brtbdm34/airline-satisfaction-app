@@ -64,7 +64,7 @@ st.markdown('---')
 satisfied_samples = test_data[test_data['satisfaction'] == 1]
 dissatisfied_samples = test_data[test_data['satisfaction'] == 0]
 
-# ÜST KONTROL PANELİ (Mod Seçimi, Profil ve Yeni Örnek Butonu Yan Yana)
+# ÜST KONTROL PANELİ (Çalışma Modu, Yolcu Profili ve Yeni Örnek Butonu)
 ctrl_col1, ctrl_col2, ctrl_col3 = st.columns([1.5, 1.5, 1])
 
 with ctrl_col1:
@@ -134,9 +134,13 @@ if all_models:
     else:
       st.warning('⚠️ SHAP grafiği için önce `main.py` dosyasını çalıştırın.')
 
-  # MOD 2: İstediğin 3 Sütunlu Tasarım, Sekmeler ve Finansal ROI Akışı
+  # MOD 2: Tekil Model, 3 Sütunlu Kart Tasarımı ve Sekmeli Yapı
   else:
-    selected_model_name = champion_name
+    selected_model_name = st.selectbox(
+        'İncelemek İstediğiniz Algoritmayı Seçin:',
+        list(all_models.keys()),
+    )
+
     selected_data = all_models[selected_model_name]
     sel_model = selected_data['model']
 
@@ -182,7 +186,7 @@ if all_models:
         '📄 Rapor İndir',
     ])
 
-    # --- TAB 1: Yolcu Profili ---
+    # --- TAB 1: Yolcu Profili (3 Sütunlu Tasarım) ---
     with tab1:
       st.markdown('### Yolcu Örneği Analizi & Özellikleri')
 
