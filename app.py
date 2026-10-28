@@ -306,7 +306,7 @@ if all_models:
                 </div>
                 <div style="border-left: 1px solid #ffeeba; padding-left: 15px;">
                     <span style="font-size: 12px; color: #856404;">TAHMİNİ ROI</span><br>
-                    <b style="font-size: 18px; color: #198754;">YÜKSEK (%{ (1 - (mitigation_cost/churn_cost)) * 100 :.1f} )</b>
+                    <b style="font-size: 18px; color: #198754;">YÜKSEK (%{ (1 - (mitigation_cost / churn_cost)) * 100 :.1f} )</b>
                 </div>
             </div>
             """,
