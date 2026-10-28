@@ -99,11 +99,15 @@ X_sample = sample.drop(columns=['satisfaction'])
 st.markdown('---')
 
 if all_models:
-  # MOD 1: Tüm Modelleri Karşılaştır ve SHAP Göster
+  # MOD 1: Tüm Modelleri Karşılaştır, Tablo ve Görsel Grafik Göster
   if view_mode == '🏆 Tüm Modelleri Karşılaştır':
-    st.subheader('📊 Tüm Algoritmaların Karşılaştırmalı Tahmin Matbucu')
+    st.subheader(
+        '📊 Tüm Algoritmaların Karşılaştırmalı Performans ve Tahmin Matbucu'
+    )
 
     comparison_results = []
+    chart_data = {}
+
     for name, data in all_models.items():
       model_inst = data['model']
       pred = model_inst.predict(X_sample)[0]
@@ -111,16 +115,28 @@ if all_models:
 
       durum_str = 'MEMNUN :)' if pred == 1 else 'MEMNUN DEĞİL :('
       guven_val = proba[1] * 100 if pred == 1 else proba[0] * 100
+      acc_val = data['acc'] * 100
 
       comparison_results.append({
           'Model Adı': name,
           'Model Tahmini': durum_str,
           'Güven Oranı (%)': f'%{guven_val:.2f}',
-          'Test Başarısı (Accuracy)': f"%{data['acc'] * 100:.2f}",
+          'Test Başarısı (Accuracy)': f'%{acc_val:.2f}',
       })
+
+      # Grafik için sözlük oluşturuyoruz
+      chart_data[name] = data['acc']
 
     result_df = pd.DataFrame(comparison_results)
     st.table(result_df)
+
+    # 🚀 GÖRSEL MODEL KARŞILAŞTIRMA GRAFİĞİ EKLENDİ
+    st.markdown('### 📈 Algoritma Doğruluk Oranları (Accuracy) Karşılaştırması')
+    chart_df = pd.DataFrame(
+        list(chart_data.items()), columns=['Model', 'Accuracy']
+    ).set_index('Model')
+    st.bar_chart(chart_df)
+
     st.success(f'🏆 Otomatik Seçilen Şampiyon Model: **{champion_name}**')
 
     # SHAP Görseli
