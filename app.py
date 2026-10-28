@@ -176,7 +176,7 @@ else:
           'Modelin Bu Yolcu İçin Tahmini', durum, f'Güven Oranı: %{guven:.2f}'
       )
     with col_m2:
-      st.metric('Modelğun Genel Doğruluk Oranı', f'%{sel_acc * 100:.2f}')
+      st.metric('Modelin Genel Doğruluk Oranı', f'%{sel_acc * 100:.2f}')
 
     if pred == 1:
       st.success(
@@ -235,9 +235,9 @@ else:
       st.markdown('### 💡 CRM & Finansal Karar Tavsiyesi:')
       if 'Elite' in simulated_tier or 'Plus' in simulated_tier:
         action_text = (
-            'VIP segmentindeki bu yolcunun kaybedilme maliyeti '
-            f'{churn_cost} TLdir. Acil olarak hesabına 3.000 Bonus Puan (Mil)'
-            ' tanımlanmalı ve VIP Lounge erişimi sağlanmalıdır.'
+            f'VIP segmentindeki bu yolcunun kaybedilme maliyeti {churn_cost}'
+            ' TLdir. Acil olarak hesabına 3.000 Bonus Puan (Mil) tanımlanmalı'
+            ' ve VIP Lounge erişimi sağlanmalıdır.'
         )
       else:
         action_text = (
@@ -247,20 +247,19 @@ else:
 
       st.markdown(f'> 🎯 **Aksiyon Özeti:** {action_text}')
 
-      # --- YÖNETİCİ ÖZETİ RAPOR İNDİRME (TXT / RAPOR FORMATI) ---
+      # --- YÖNETİCİ ÖZETİ RAPOR İNDİRME ---
       st.markdown('---')
       st.subheader('📄 Yönetici Özeti ve İstasyon Raporu')
 
-      report_content = f"""
-      === KÜRESEL HAVAYOLU OPERASYONEL RİSK RAPORU ===
-      Model: {selected_model_name}
-      Tahmin Sonucu: {durum} (Güven: %{guven:.2f})
-      Sadakat Segmenti: {simulated_tier}
-      Tahmini Kayıp Riski: YÜKSEK (%84.2)
-      Finansal Etki Analizi: Potansiyel Kayıp: {churn_cost} TL | Müdahale Maliyeti: {mitigation_cost} TL
-      Önerilen Aksiyon: {action_text}
-      Tarih / Zaman: Otomatik Sistem Üretimidir.
-      """
+      report_content = f"""=== KÜRESEL HAVAYOLU OPERASYONEL RİSK RAPORU ===
+Model: {selected_model_name}
+Tahmin Sonucu: {durum} (Güven: %{guven:.2f})
+Sadakat Segmenti: {simulated_tier}
+Tahmini Kayıp Riski: YÜKSEK (%84.2)
+Finansal Etki Analizi: Potansiyel Kayıp: {churn_cost} TL | Müdahale Maliyeti: {mitigation_cost} TL
+Önerilen Aksiyon: {action_text}
+Tarih / Zaman: Otomatik Sistem Üretimidir.
+"""
 
       st.download_button(
           label='📥 Yönetici Raporunu İndir (.txt / Rapor)',
@@ -270,6 +269,13 @@ else:
       )
 
     st.info(
-        '💡 Sunum ipucu: *"Hocam sistem sadece uyarı vermiyor; yolcunun'
+        '💡 Sunum ipucu: "Hocam sistem sadece uyarı vermiyor; yolcunun'
         ' segmentine göre şirketin uğrayacağı finansal zararı hesaplıyor ve 1'
-        ' tıkla istasyon mü
+        ' tıkla istasyon müdürlüğüne veya kabin amirine resmi operasyonel'
+        ' rapor üretiyor."'
+    )
+  else:
+    st.warning(
+        'Tekli model modundasınız. Lütfen `main.py` çalıştırarak çoklu model'
+        ' yapısını aktif edin.'
+    )
