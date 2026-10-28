@@ -296,4 +296,4 @@ Tarih / Zaman: Otomatik Sistem Üretimidir.
       '💡 Sunum ipucu: "Hocam üstteki sekmelerden; yolcunun profilini, otomatik'
       ' kriz yönetimini ve şirkete olan finansal etkisini adım adım'
       ' gösterebilirim."'
-  )git add app.py
+  )
