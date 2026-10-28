@@ -43,7 +43,7 @@ st.set_page_config(
     layout='wide',
 )
 
-# Üst Başlık
+# ÜST KISIM: Ana Kurumsal Başlıklar
 st.markdown(
     '<h2 style="color: #0e1117; margin-bottom: 0;">✈️ KÜRESEL HAVAYOLU PROAKTİF'
     ' RİSK VE SADAKAT YÖNETİMİ</h2>',
@@ -58,19 +58,27 @@ st.write(
     ' kompanzasyon ve yönetici raporlama motoruyla birleştirir.'
 )
 
+st.markdown('---')
+
 # Gerçek memnun ve memnun olmayan yolcuları ayıralım
 satisfied_samples = test_data[test_data['satisfaction'] == 1]
 dissatisfied_samples = test_data[test_data['satisfaction'] == 0]
 
-st.sidebar.header('🧪 Test ve Kontrol Paneli')
+# ÜST KONTROL PANELİ (Test ve Profil Seçimi Yan Yana)
+st.markdown('### 🧪 Test ve Kontrol Paneli')
+ctrl_col1, ctrl_col2 = st.columns([2, 1])
 
-test_type = st.sidebar.radio(
-    'Test Etmek İstediğiniz Yolcu Profili:',
-    ('Gerçekte MEMNUN Olan Yolcu', 'Gerçekte MEMNUN OLMAYAN Yolcu'),
-)
+with ctrl_col1:
+  test_type = st.radio(
+      'Test Etmek İstediğiniz Yolcu Profili:',
+      ('Gerçekte MEMNUN Olan Yolcu', 'Gerçekte MEMNUN OLMAYAN Yolcu'),
+      horizontal=True,
+  )
 
-if st.sidebar.button('🔀 Yeni Yolcu Örneği Seç'):
-  st.rerun()
+with ctrl_col2:
+  st.markdown('<div style="margin-top: 25px;"></div>', unsafe_allow_html=True)
+  if st.button('🔀 Yeni Yolcu Örneği Seç', use_container_width=True):
+    st.rerun()
 
 # Yolcu seçimi
 if test_type == 'Gerçekte MEMNUN Olan Yolcu':
