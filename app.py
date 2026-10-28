@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import streamlit as st
 
+
 # 1. Kaydedilmiş modelleri ve test verisini yüklüyoruz
 @st.cache_resource
 def load_resources():
@@ -36,13 +37,13 @@ def load_resources():
 champion_model, champion_name, all_models, test_data = load_resources()
 
 st.set_page_config(
-    page_title='THY Proaktif Yolcu Deneyimi ve Sadakat Sistemi',
+    page_title='Global Airlines Proaktif Yolcu Deneyimi ve Sadakat Sistemi',
     page_icon='✈️',
     layout='wide',
 )
 
 st.title(
-    '✈️ THY Miles&Smiles Proaktif Risk ve Sadakat Yönetimi Karar Destek Sistemi'
+    '✈️ Küresel Havayolu Proaktif Risk ve Sadakat Yönetimi Karar Destek Sistemi'
 )
 st.write(
     'Bu sistem, makine öğrenmesi tahminlerini sadece bir skor olarak vermez;'
@@ -61,7 +62,7 @@ view_mode = st.sidebar.radio(
     'Çalışma Modu:',
     (
         '🏆 Tüm Modelleri Karşılaştır',
-        '🔍 Tekil Model & THY Kriz Yönetimi İncele',
+        '🔍 Tekil Model & Kriz Yönetimi İncele',
     ),
 )
 
@@ -143,10 +144,10 @@ if view_mode == '🏆 Tüm Modelleri Karşılaştır':
     else:
       st.warning('⚠️ SHAP grafiği için önce `main.py` dosyasını çalıştırın.')
 
-# 2. MOD: İstediğin Modeli Tekil İncele + THY Proaktif Kriz Yönetimi
+# 2. MOD: İstediğin Modeli Tekil İncele + Proaktif Kriz Yönetimi
 else:
   st.subheader(
-      '🔍 Tekil Model Derinlemesine İnceleme & THY Proaktif Aksiyon Motoru'
+      '🔍 Tekil Model Derinlemesine İnceleme & Proaktif Aksiyon Motoru'
   )
 
   if all_models:
@@ -181,7 +182,7 @@ else:
           ' **Memnun** olarak değerlendirdi.'
       )
       st.info(
-          '💡 **Miles&Smiles Durumu:** Yolcu sadık müşteri segmentinde.'
+          '💡 **Sadakat Programı Durumu:** Yolcu sadık müşteri segmentinde.'
           ' Herhangi bir operasyonel müdahaleye gerek yok, mevcut hizmet kalitesi'
           ' korunmalı.'
       )
@@ -191,13 +192,12 @@ else:
           ' **Memnun Değil** olarak değerlendirdi.'
       )
 
-      # --- THY PROAKTİF KOMPANZASYON VE RİSK MOTORU ---
+      # --- PROAKTİF KOMPANZASYON VE RİSK MOTORU ---
       st.warning(
-          '🚨 **ACİL KRİZ YÖNETİMİ & PROAKTİF AKSİYON ÖNERİSİ (THY CRM'
+          '🚨 **ACİL KRİZ YÖNETİMİ & PROAKTİF AKSİYON ÖNERİSİ (CRM'
           ' Entegrasyonu):**'
       )
 
-      # Rastgele bir statü simüle edelim (Sunumda jüriye hava atmak için harika durur)
       tier_list = [
           'Classic (Standart)',
           'Classic Plus',
@@ -225,13 +225,14 @@ else:
             ' kritik seviyede.'
         )
 
-      st.markdown('### 💡 Kabin Amiri / CRM Otomatik Müenetim Tavsiyesi:')
+      st.markdown('### 💡 Kabin Amiri / CRM Otomatik Müdahale Tavsiyesi:')
       if 'Elite' in simulated_tier or 'Plus' in simulated_tier:
         st.markdown(
             '> 🎯 **Aksiyon Alınmalı:** Bu yolcu VIP segmentindedir.'
             ' Kaybedilmemesi gerekir! İniş öncesi hesabına otomatik olarak'
-            ' **3.000 Bonus Miles&Smiles Mili** tanımlanmalı ve bir sonraki'
-            ' uçuşu için **CIP Lounge** erişim kodu SMS olarak gönderilmelidir.'
+            ' **3.000 Bonus Puan (Mil)** tanımlanmalı ve bir sonraki uçuşu'
+            ' için **Özel Dinlenme Salonu (Lounge)** erişim kodu SMS olarak'
+            ' gönderilmelidir.'
         )
       else:
         st.markdown(
@@ -251,4 +252,3 @@ else:
         'Tekli model modundasınız. Lütfen `main.py` çalıştırarak çoklu model'
         ' yapısını aktif edin.'
     )
-    
