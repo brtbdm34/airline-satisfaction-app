@@ -1,0 +1,20 @@
+
+=== İSTİNYE ÜNİVERSİTESİ YAZILIM MÜHENDİSLİĞİ ===
+MAKİNE ÖĞRENMESİ VİZE PROJESİ - OTOMATİK METRİK RAPORU
+
+[1. Model] Decision Tree Doğruluk Oranı: %94.74
+[2. Model] Random Forest Doğruluk Oranı: %96.29
+[3. Model] Gradient Boosting Doğruluk Oranı: %94.14
+
+En Yüksek Başarı Gösteren Model: Gradient Boosting (%94.14)
+
+Gradient Boosting Sınıflandırma Raporu:
+              precision    recall  f1-score   support
+
+           0       0.94      0.96      0.95     14573
+           1       0.94      0.92      0.93     11403
+
+    accuracy                           0.94     25976
+   macro avg       0.94      0.94      0.94     25976
+weighted avg       0.94      0.94      0.94     25976
+
