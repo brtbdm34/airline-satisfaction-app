@@ -43,7 +43,7 @@ st.set_page_config(
     layout='wide',
 )
 
-# Üst Başlık
+# Üst Başlık ve Kurumsal Kimlik
 st.title('✈️ KÜRESEL HAVAYOLU PROAKTİF RİSK VE SADAKAT YÖNETİMİ')
 st.markdown(
     '**Geliştirici:** Berat Badem | **Sistem:** Kurumsal Karar Destek ve'
@@ -125,7 +125,7 @@ if view_mode == '🏆 Tüm Modelleri Karşılaştır':
     else:
       st.warning('⚠️ SHAP grafiği için önce `main.py` dosyasını çalıştırın.')
 
-# 2. MOD: Tekil İnceleme + İstediğin Görsel Tasarım
+# 2. MOD: Tekil İnceleme + İstediğin 3 Sütunlu Mockup Düzeni
 else:
   st.subheader('🔍 Tekil Model Derinlemesine İnceleme & Proaktif Aksiyon Motoru')
 
@@ -183,13 +183,13 @@ else:
         '📄 Rapor İndir',
     ])
 
-    # --- TAB 1: Yolcu Profili (İstediğin Görsel Düzen) ---
+    # --- TAB 1: Yolcu Profili (3 Sütunlu Tasarım) ---
     with tab1:
       st.markdown('### Yolcu Örneği Analizi & Özellikleri')
 
       c1, c2, c3 = st.columns([2, 1.2, 1])
 
-      # Sol Kolon: Parametre Kartları Grid Yapısı
+      # Sol Kolon: Parametre Kartları Grid Yapısı (6 parametre)
       with c1:
         st.markdown('**Seçilen Yolcunun Profil Özellikleri**')
         sub_c1, sub_c2 = st.columns(2)
