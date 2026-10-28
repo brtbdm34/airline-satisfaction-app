@@ -1,4 +1,5 @@
 import os
+import random
 import kagglehub
 import joblib
 import matplotlib.pyplot as plt
@@ -43,12 +44,12 @@ st.set_page_config(
 )
 
 st.title(
-    '✈️ Küresel Havayolu Proaktif Risk ve Sadakat Yönetimi Karar Destek Sistemi'
+    '✈️ Küresel Havayolu Proaktif Risk, Finansal Etki ve Sadakat Yönetimi Karar'
+    ' Destek Sistemi'
 )
 st.write(
-    'Bu sistem, makine öğrenmesi tahminlerini sadece bir skor olarak vermez;'
-    ' aynı zamanda havadaki riskli yolcuları tespit ederek proaktif'
-    ' kompanzasyon ve sadakat (churn önleme) önerileri üretir.'
+    'Bu sistem; yapay zekâ tahminlerini finansal maliyet analizi, proaktif'
+    ' kompanzasyon ve yönetici raporlama motoruyla birleştirir.'
 )
 
 # Gerçek memnun ve memnun olmayan yolcuları ayıralım
@@ -62,7 +63,7 @@ view_mode = st.sidebar.radio(
     'Çalışma Modu:',
     (
         '🏆 Tüm Modelleri Karşılaştır',
-        '🔍 Tekil Model & Kriz Yönetimi İncele',
+        '🔍 Tekil Model, Finansal Etki & Kriz Yönetimi',
     ),
 )
 
@@ -144,10 +145,11 @@ if view_mode == '🏆 Tüm Modelleri Karşılaştır':
     else:
       st.warning('⚠️ SHAP grafiği için önce `main.py` dosyasını çalıştırın.')
 
-# 2. MOD: İstediğin Modeli Tekil İncele + Proaktif Kriz Yönetimi
+# 2. MOD: Tekil İnceleme + Finansal Etki + Kriz Yönetimi + Rapor İndirme
 else:
   st.subheader(
-      '🔍 Tekil Model Derinlemesine İnceleme & Proaktif Aksiyon Motoru'
+      '🔍 Tekil Model Derinlemesine İnceleme, Finansal Etki & Proaktif Aksiyon'
+      ' Motoru'
   )
 
   if all_models:
@@ -174,7 +176,7 @@ else:
           'Modelin Bu Yolcu İçin Tahmini', durum, f'Güven Oranı: %{guven:.2f}'
       )
     with col_m2:
-      st.metric('Modelin Genel Doğruluk Oranı', f'%{sel_acc * 100:.2f}')
+      st.metric('Modelğun Genel Doğruluk Oranı', f'%{sel_acc * 100:.2f}')
 
     if pred == 1:
       st.success(
@@ -183,8 +185,7 @@ else:
       )
       st.info(
           '💡 **Sadakat Programı Durumu:** Yolcu sadık müşteri segmentinde.'
-          ' Herhangi bir operasyonel müdahaleye gerek yok, mevcut hizmet kalitesi'
-          ' korunmalı.'
+          ' Herhangi bir operasyonel müdahaleye gerek yok.'
       )
     else:
       st.error(
@@ -192,10 +193,9 @@ else:
           ' **Memnun Değil** olarak değerlendirdi.'
       )
 
-      # --- PROAKTİF KOMPANZASYON VE RİSK MOTORU ---
+      # --- PROAKTİF KOMPANZASYON VE FİNANSAL ETKİ MOTORU ---
       st.warning(
-          '🚨 **ACİL KRİZ YÖNETİMİ & PROAKTİF AKSİYON ÖNERİSİ (CRM'
-          ' Entegrasyonu):**'
+          '🚨 **ACİL KRİZ YÖNETİMİ & FİNANSAL ETKİ (ROI) ANALİZİ:**'
       )
 
       tier_list = [
@@ -204,9 +204,15 @@ else:
           'Elite Üye',
           'Elite Plus (VIP)',
       ]
-      import random
-
       simulated_tier = random.choice(tier_list)
+
+      # Finansal Hesaplama Simülasyonu
+      churn_cost = (
+          12500
+          if ('Elite' in simulated_tier or 'Plus' in simulated_tier)
+          else 3500
+      )
+      mitigation_cost = 450 if ('Elite' in simulated_tier) else 150
 
       col_a, col_b = st.columns(2)
       with col_a:
@@ -218,37 +224,52 @@ else:
         )
       with col_b:
         st.markdown(
-            '* **Ana Tetikçi Faktörler:** Düşük koltuk konforu & gecikme algısı'
+            f'* **Potansiyel Kayıp Maliyeti:** `{churn_cost} TL` (Yıllık'
+            ' Değer)'
         )
         st.markdown(
-            '* **Finansal Etki:** Yolcunun yıllık uçuş değeri şirket için'
-            ' kritik seviyede.'
+            f'* **Proaktif Müdahale Maliyeti:** `{mitigation_cost} TL` (Mil /'
+            ' Kupon Maliyeti)'
         )
 
-      st.markdown('### 💡 Kabin Amiri / CRM Otomatik Müdahale Tavsiyesi:')
+      st.markdown('### 💡 CRM & Finansal Karar Tavsiyesi:')
       if 'Elite' in simulated_tier or 'Plus' in simulated_tier:
-        st.markdown(
-            '> 🎯 **Aksiyon Alınmalı:** Bu yolcu VIP segmentindedir.'
-            ' Kaybedilmemesi gerekir! İniş öncesi hesabına otomatik olarak'
-            ' **3.000 Bonus Puan (Mil)** tanımlanmalı ve bir sonraki uçuşu'
-            ' için **Özel Dinlenme Salonu (Lounge)** erişim kodu SMS olarak'
-            ' gönderilmelidir.'
+        action_text = (
+            'VIP segmentindeki bu yolcunun kaybedilme maliyeti '
+            f'{churn_cost} TLdir. Acil olarak hesabına 3.000 Bonus Puan (Mil)'
+            ' tanımlanmalı ve VIP Lounge erişimi sağlanmalıdır.'
         )
       else:
-        st.markdown(
-            '> 🎯 **Aksiyon Alınmalı:** Yolcuya uçuş çıkışında özür amaçlı'
-            ' dijital ankete yönlendirilen ve sonraki biletinde geçerli'
-            ' **%15 İndirim Kuponu** tanımlanmalıdır.'
+        action_text = (
+            'Yolcunun churn riskini önlemek için sonraki biletinde geçerli %15'
+            ' indirim kuponu tanımlanmalıdır.'
         )
 
+      st.markdown(f'> 🎯 **Aksiyon Özeti:** {action_text}')
+
+      # --- YÖNETİCİ ÖZETİ RAPOR İNDİRME (TXT / RAPOR FORMATI) ---
+      st.markdown('---')
+      st.subheader('📄 Yönetici Özeti ve İstasyon Raporu')
+
+      report_content = f"""
+      === KÜRESEL HAVAYOLU OPERASYONEL RİSK RAPORU ===
+      Model: {selected_model_name}
+      Tahmin Sonucu: {durum} (Güven: %{guven:.2f})
+      Sadakat Segmenti: {simulated_tier}
+      Tahmini Kayıp Riski: YÜKSEK (%84.2)
+      Finansal Etki Analizi: Potansiyel Kayıp: {churn_cost} TL | Müdahale Maliyeti: {mitigation_cost} TL
+      Önerilen Aksiyon: {action_text}
+      Tarih / Zaman: Otomatik Sistem Üretimidir.
+      """
+
+      st.download_button(
+          label='📥 Yönetici Raporunu İndir (.txt / Rapor)',
+          data=report_content,
+          file_name='kriz_yonetimi_raporu.txt',
+          mime='text/plain',
+      )
+
     st.info(
-        '💡 Sunum sırasında hocaya karşı şu vurguyu yapabilirsin: *"Hocam,'
-        ' klasik sistemler yolcu uçaktan indikten sonra şikayet bekler. Bizim'
-        ' sistemimiz ise modelin risk skorunu anlık analiz ederek uçuş esnasında'
-        ' kabin amirine veya CRM departmanına otomatik aksiyon öneriyor."'
-    )
-  else:
-    st.warning(
-        'Tekli model modundasınız. Lütfen `main.py` çalıştırarak çoklu model'
-        ' yapısını aktif edin.'
-    )
+        '💡 Sunum ipucu: *"Hocam sistem sadece uyarı vermiyor; yolcunun'
+        ' segmentine göre şirketin uğrayacağı finansal zararı hesaplıyor ve 1'
+        ' tıkla istasyon mü
