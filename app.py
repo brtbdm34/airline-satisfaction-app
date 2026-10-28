@@ -1,4 +1,4 @@
-imimport os
+import os
 import random
 import kagglehub
 import joblib
@@ -43,7 +43,6 @@ st.set_page_config(
     layout='wide',
 )
 
-# Başlık kısmını tek satırda ve net olacak şekilde düzenledik
 st.title('✈️ Küresel Havayolu Proaktif Risk ve Sadakat Yönetimi')
 st.markdown(
     '**Geliştirici:** Berat Badem | **Sistem:** Kurumsal Karar Destek ve'
